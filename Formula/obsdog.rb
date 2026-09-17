@@ -42,7 +42,7 @@ class Obsdog < Formula
 
     project = testpath/"project"
     project.mkpath
-    (testpath/"fixture.md").write("# Comet\n\nSynthetic knowledge survives package installation.\n")
+    (testpath/"fixture.md").write("# Package evidence\n\nComet knowledge survives package installation.\n")
     system bin/"obsdog", "init", "--path", project, "--format", "json"
     system bin/"obsdog", "document", "import", "--path", project,
            "--file", testpath/"fixture.md", "--format", "json"
