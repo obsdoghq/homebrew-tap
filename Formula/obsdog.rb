@@ -2,7 +2,6 @@ class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and Wiki CLI"
   homepage "https://obsdog.ai"
   url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.9/obsdog_v0.1.9_darwin_arm64.tar.gz"
-  version "0.1.9"
   sha256 "7a3f1d14b13b2fe3ae22a52f220815fee40211287c98852e8a10b41d4005b320"
   license :cannot_represent
 
@@ -21,8 +20,8 @@ class Obsdog < Formula
 
   def install
     bin.install "obsdog"
-    resource("binary-license").stage { (share/"obsdog").install "BINARY-LICENSE.txt" }
-    resource("third-party-notices").stage { (share/"obsdog").install "THIRD_PARTY_NOTICES.txt" }
+    resource("binary-license").stage { pkgshare.install "BINARY-LICENSE.txt" }
+    resource("third-party-notices").stage { pkgshare.install "THIRD_PARTY_NOTICES.txt" }
   end
 
   def caveats
