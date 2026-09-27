@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and Wiki CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.10/obsdog_v0.1.10_darwin_arm64.tar.gz"
-  sha256 "2cfad47c65a398bf4f8525c0dbe0022ba61696056bcc4f10ef92e09eb2a7d02a"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.11/obsdog_v0.1.11_darwin_arm64.tar.gz"
+  sha256 "c42a17fff3329c5f94aaaf75690f56342e19b680b77858872463983fa6cebee6"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.10/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.11/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.10/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.11/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -26,7 +26,7 @@ class Obsdog < Formula
 
   def caveats
     <<~EOS
-      Local use needs no account. Run obsdog init inside your project.
+      Local use needs no account or init. Commands default to your Personal Space.
       Space data is stored in ~/.obsdog and survives brew uninstall.
       Use brew upgrade obsdoghq/tap/obsdog for Homebrew-owned updates.
       This package is the CLI, not the macOS desktop app.
@@ -43,10 +43,12 @@ class Obsdog < Formula
     project = testpath/"project"
     project.mkpath
     (testpath/"fixture.md").write("# Package evidence\n\nComet knowledge survives package installation.\n")
-    system bin/"obsdog", "init", "--path", project, "--format", "json"
-    system bin/"obsdog", "document", "import", "--path", project,
-           "--file", testpath/"fixture.md", "--format", "json"
-    result = JSON.parse(shell_output("#{bin}/obsdog search --path #{project} --query comet --format json"))
+    system bin/"obsdog", "document", "import", "--file", testpath/"fixture.md",
+           "--actor-type", "agent", "--actor", "package-test", "--format", "json"
+    result = Dir.chdir(project) do
+      command = "#{bin}/obsdog search --query comet --actor-type agent --actor package-test --format json"
+      JSON.parse(shell_output(command))
+    end
     assert result.fetch("ok")
     assert_equal 1, result.fetch("data").fetch("hits").length
 

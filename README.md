@@ -7,12 +7,15 @@ Official binary distribution metadata for [ObsDog](https://obsdog.ai). Product s
 ```sh
 brew install obsdoghq/tap/obsdog
 obsdog version
-cd /path/to/your-project
-obsdog init
 obsdog wiki serve
 ```
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
+
+CLI v0.1.11 defaults to the same Personal Space from any directory; `init` is
+optional project guidance, not a prerequisite. Use `--space personal` or an exact
+local Space ID when selecting explicitly. Existing ambiguous libraries require
+`obsdog space default --set <space-id>`; they are never silently merged or synced.
 
 The CLI is not the macOS desktop app. No desktop Cask is published until its separate installation, recovery and signed-update checks pass.
 
