@@ -22,7 +22,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.4.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.5.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -57,6 +57,10 @@ structural sync and conditional recovery. Connected care needs server v0.1.29+,
 compatible active writers and preparation of the existing connection; installation
 does not enable sync. Read the [care guide](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/ai-care.md).
 
+v0.2.5 excludes returned-only searches from the bounded Living-memory scoring
+input without removing those events from history. Scoring weights and historical
+chunks are unchanged; this is a correctness repair, not a benchmarked quality gain.
+
 ```sh
 brew update
 brew upgrade obsdoghq/tap/obsdog
@@ -75,7 +79,7 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
-The v0.2.4 formula passes style, strict audit, actual installation alongside a
+The v0.2.4 formula passed style, strict audit, actual installation alongside a
 retained 0.2.3 keg and formula tests. Rejected legacy entrypoints, directory-independent Personal
 selection, agent attribution, the substring policy, document inventory,
 read-only insights, page coordinates/eligible samples, bounded-care help,
