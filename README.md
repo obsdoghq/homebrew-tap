@@ -7,7 +7,8 @@ Official binary distribution metadata for [ObsDog](https://obsdog.ai). Product s
 ```sh
 brew install obsdoghq/tap/obsdog
 obsdog version
-obsdog wiki serve
+obsdog document list
+obsdog dashboard serve
 ```
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
@@ -21,7 +22,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.1.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.2.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -35,10 +36,14 @@ v0.1.16 adds bounded usefulness reranking and `memory show`: actual usage traces
 strengthen, fade and recover without deleting sources. `--ranking lexical`
 retains the comparison baseline. See [Living memory](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/living-memory.md).
 
-v0.2.1 isolates current lexical scoring from retained historical snapshots and
-fixes timestamp-dependent snapshot selection. Search identifies the baseline as
-`lexical/current-v1`. This preserves source history and recorded evidence; it is
-an index-consistency fix, not a demonstrated benchmark hit-rate improvement.
+v0.2.2 adds whitespace-insensitive substring discovery (`lexical/compact-substring-v1`),
+`document list`, typed source checks and an offline dashboard with measured
+Top K utilization, observation coverage, activity and source evidence. It retains
+v0.2.1's separation of current scoring from historical snapshots. No benchmark
+hit-rate improvement is claimed. The [AI plugin](https://github.com/obsdoghq/skills)
+is installed separately; confirm CLI readiness with `obsdog version`.
+[Setup guide](https://github.com/obsdoghq/skills/blob/main/docs/SETUP.md) ·
+[Product feedback](https://github.com/obsdoghq/obsdog-releases/issues/new/choose).
 
 ## Update and uninstall
 
@@ -60,10 +65,10 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
-The v0.2.1 formula passes style, strict audit, an actual 0.2.0-to-0.2.1 upgrade
+The v0.2.2 formula passes style, strict audit, an actual 0.2.1-to-0.2.2 upgrade
 and formula tests. Rejected legacy entrypoints, directory-independent Personal
-selection, agent attribution, the current lexical policy and Homebrew updater
-ownership are checked.
+selection, agent attribution, the substring policy, document inventory,
+read-only insights and Homebrew updater ownership are checked.
 
 Public documentation checks run with `python3 scripts/check_public_content.py`
 and `python3 -m unittest discover -s tests`. They supplement review; they are not
