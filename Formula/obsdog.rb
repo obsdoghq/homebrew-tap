@@ -73,7 +73,10 @@ class Obsdog < Formula
     refute_path_exists project/".obsdog"
 
     digest = Digest::SHA256.file(bin/"obsdog").hexdigest
-    assert_match "Homebrew", shell_output("#{bin}/obsdog update --check 2>&1", 1)
+    update = JSON.parse(shell_output("#{bin}/obsdog update --check --format json"))
+    assert update.fetch("ok")
+    assert_equal "homebrew", update.fetch("data").fetch("owner")
+    assert_equal "brew upgrade obsdoghq/tap/obsdog", update.fetch("data").fetch("instruction")
     assert_equal digest, Digest::SHA256.file(bin/"obsdog").hexdigest
   end
 end
