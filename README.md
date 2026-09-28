@@ -79,8 +79,8 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
-The v0.2.4 formula passed style, strict audit, actual installation alongside a
-retained 0.2.3 keg and formula tests. Rejected legacy entrypoints, directory-independent Personal
+The v0.2.5 formula passed style, strict audit, actual upgrade from v0.2.4 and
+formula tests. Rejected legacy entrypoints, directory-independent Personal
 selection, agent attribution, the substring policy, document inventory,
 read-only insights, page coordinates/eligible samples, bounded-care help,
 connected preparation help and Homebrew updater ownership are checked. Synthetic
