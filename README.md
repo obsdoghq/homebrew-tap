@@ -22,7 +22,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.2.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.3.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -44,6 +44,11 @@ hit-rate improvement is claimed. The [AI plugin](https://github.com/obsdoghq/ski
 is installed separately; confirm CLI readiness with `obsdog version`.
 [Setup guide](https://github.com/obsdoghq/skills/blob/main/docs/SETUP.md) ·
 [Product feedback](https://github.com/obsdoghq/obsdog-releases/issues/new/choose).
+
+v0.2.3 adds frozen, globally ranked search pages, explicit first-page-use samples,
+exact imported relative links and separate graph proposals from question comments.
+See [search pages](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/search-pages.md).
+Installing does not inject examples into Personal, open a browser or upload data.
 
 ## Update and uninstall
 

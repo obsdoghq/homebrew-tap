@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.2/obsdog_v0.2.2_darwin_arm64.tar.gz"
-  sha256 "81b3ef4c9c3c295c3552b15a8a125a090db332a183c15374945295be8f98f1ff"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/obsdog_v0.2.3_darwin_arm64.tar.gz"
+  sha256 "6d8b7231a0c2e569f567dbf11412d60048e730dd5575618db866db273a26664b"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.2/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.2/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -54,11 +54,15 @@ class Obsdog < Formula
     assert result.fetch("ok")
     assert_equal 1, result.fetch("data").fetch("hits").length
     assert_equal "lexical/compact-substring-v1", result.fetch("data").fetch("lexical_policy")
+    assert_equal 1, result.fetch("data").fetch("page")
+    assert_equal 1, result.fetch("data").fetch("hits").first.fetch("page_rank")
     documents = JSON.parse(shell_output("#{bin}/obsdog document list --format json"))
     assert_equal 1, documents.fetch("data").length
     insights = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
     assert_equal 1, insights.fetch("data").fetch("current").fetch("searches")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("used_runs")
+    assert_equal 1, insights.fetch("data").fetch("current").fetch("page_eligible")
+    assert_equal 0, insights.fetch("data").fetch("current").fetch("first_page_used")
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
 
     assert_match "unknown command", shell_output("#{bin}/obsdog init 2>&1", 1)
