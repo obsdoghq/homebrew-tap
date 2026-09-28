@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and Wiki CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.16/obsdog_v0.1.16_darwin_arm64.tar.gz"
-  sha256 "4bafffd24adda370217dfa482c9327eba823122dfa30a162ac60a329747d2f53"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.0/obsdog_v0.2.0_darwin_arm64.tar.gz"
+  sha256 "5620170eeac98b9e8464bfbfb2b9c582fb1509268206b61364f193d4e023bc65"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.16/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.0/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.16/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.0/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -51,6 +51,10 @@ class Obsdog < Formula
     end
     assert result.fetch("ok")
     assert_equal 1, result.fetch("data").fetch("hits").length
+
+    assert_match "unknown command", shell_output("#{bin}/obsdog init 2>&1", 1)
+    assert_match "flag provided but not defined", shell_output("#{bin}/obsdog space status --path #{project} 2>&1", 1)
+    refute_path_exists project/".obsdog"
 
     digest = Digest::SHA256.file(bin/"obsdog").hexdigest
     assert_match "Homebrew", shell_output("#{bin}/obsdog update --check 2>&1", 1)
