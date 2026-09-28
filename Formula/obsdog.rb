@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/obsdog_v0.2.6_darwin_arm64.tar.gz"
-  sha256 "29a301d8a682d9933a880abee5fea200be5d41abe684886cc591625f6ab9bf24"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/obsdog_v0.2.7_darwin_arm64.tar.gz"
+  sha256 "05c459173dec619ef074a2dfe9fc0f91b22d9bb742de8e3567d6676991842682"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -29,6 +29,8 @@ class Obsdog < Formula
       Local use needs no account or init. Commands default to your Personal Space.
       Space data is stored in ~/.obsdog and survives brew uninstall.
       Use brew upgrade obsdoghq/tap/obsdog for Homebrew-owned updates.
+      After upgrading, restart any running obsdog dashboard serve process;
+      refreshing its browser page alone keeps the old server running.
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Browse with obsdog document list or obsdog dashboard serve.
