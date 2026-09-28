@@ -21,7 +21,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.0.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.1.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -34,6 +34,11 @@ The CLI is not the macOS desktop app. A desktop Cask is not currently offered.
 v0.1.16 adds bounded usefulness reranking and `memory show`: actual usage traces
 strengthen, fade and recover without deleting sources. `--ranking lexical`
 retains the comparison baseline. See [Living memory](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/living-memory.md).
+
+v0.2.1 isolates current lexical scoring from retained historical snapshots and
+fixes timestamp-dependent snapshot selection. Search identifies the baseline as
+`lexical/current-v1`. This preserves source history and recorded evidence; it is
+an index-consistency fix, not a demonstrated benchmark hit-rate improvement.
 
 ## Update and uninstall
 
