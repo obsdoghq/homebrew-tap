@@ -22,7 +22,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.3.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.4.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -51,6 +51,11 @@ See [search pages](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/
 Installing does not inject examples into Personal, open a browser or upload data.
 
 ## Update and uninstall
+
+v0.2.4 adds bounded AI care plans, exact outcome/history receipts, atomic
+structural sync and conditional recovery. Connected care needs server v0.1.29+,
+compatible active writers and preparation of the existing connection; installation
+does not enable sync. Read the [care guide](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/ai-care.md).
 
 ```sh
 brew update

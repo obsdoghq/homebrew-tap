@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/obsdog_v0.2.3_darwin_arm64.tar.gz"
-  sha256 "6d8b7231a0c2e569f567dbf11412d60048e730dd5575618db866db273a26664b"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.4/obsdog_v0.2.4_darwin_arm64.tar.gz"
+  sha256 "8c3bc2fbff097e9adc18a4bfb96365232acef4f88372a0ca41233840ddb5159b"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.4/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.3/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.4/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -64,6 +64,8 @@ class Obsdog < Formula
     assert_equal 1, insights.fetch("data").fetch("current").fetch("page_eligible")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("first_page_used")
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
+    assert_match "care apply", shell_output("#{bin}/obsdog care --help")
+    assert_match "prepare-care", shell_output("#{bin}/obsdog sync --help")
 
     assert_match "unknown command", shell_output("#{bin}/obsdog init 2>&1", 1)
     assert_match "flag provided but not defined", shell_output("#{bin}/obsdog space status --path #{project} 2>&1", 1)
