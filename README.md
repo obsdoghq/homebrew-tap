@@ -12,7 +12,7 @@ obsdog wiki serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-CLI v0.1.14 defaults to the same Personal Space from any directory; `init` is
+CLI v0.1.15 defaults to the same Personal Space from any directory; `init` is
 optional project guidance, not a prerequisite. Use `--space personal` or an exact
 local Space ID when selecting explicitly. Existing ambiguous libraries require
 `obsdog space default --set <space-id>`; they are never silently merged or synced.
@@ -23,7 +23,7 @@ consent and server v0.1.24; installing or logging in does not upload anything.
 See the [release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.1.13.md)
 before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
-v0.1.14 adds revision-bound sources and authoring reviews, explicit source/temporal
+v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
 filters and read-only quality inspection. See the [care guide](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/knowledge-care.md).
 Connected care writes require server v0.1.26 and compatible clients. Installing
 does not classify existing notes, start a worker or resume native app work.

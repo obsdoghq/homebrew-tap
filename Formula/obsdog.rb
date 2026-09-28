@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and Wiki CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.14/obsdog_v0.1.14_darwin_arm64.tar.gz"
-  sha256 "42c7fe181c88d398debbe6cba18e0c3388b6f17636eaf47aa631361b19060cc9"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.15/obsdog_v0.1.15_darwin_arm64.tar.gz"
+  sha256 "808a6693c2bb9031f9ec4aaa0bda54c1fe0f67c418edd111b87350c5ee450a09"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.14/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.15/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.14/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.1.15/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
