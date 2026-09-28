@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.5/obsdog_v0.2.5_darwin_arm64.tar.gz"
-  sha256 "f29aa7138adfa7a2ac2df35e38643b63aa989b82e01d8469a8d31590a302828d"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/obsdog_v0.2.6_darwin_arm64.tar.gz"
+  sha256 "29a301d8a682d9933a880abee5fea200be5d41abe684886cc591625f6ab9bf24"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.5/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.5/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.6/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -38,6 +38,7 @@ class Obsdog < Formula
   test do
     require "json"
     ENV["OBSDOG_HOME"] = (testpath/"data").to_s
+    ENV["OBSDOG_NO_UPDATE_NOTIFIER"] = "1"
     assert_equal "v#{version}", shell_output("#{bin}/obsdog version").strip
     assert_match "Usage", shell_output("#{bin}/obsdog --help")
     assert_match "Third-party notices", shell_output("#{bin}/obsdog --licenses")

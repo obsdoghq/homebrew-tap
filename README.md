@@ -22,7 +22,7 @@ working directories and old project bindings do not select a Space. Existing amb
 v0.1.13 includes an explicit recoverable Personal-history adoption workflow for an
 already populated local and hosted library. It requires full-Space upload
 consent and server v0.1.24; installing or logging in does not upload anything.
-See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.5.md)
+See the [current release notes](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.6.md)
 and `obsdog sync --help` before using the advanced `sync adopt-preview` / `sync adopt` commands.
 
 v0.1.15 retains revision-bound sources and authoring reviews, explicit source/temporal
@@ -60,6 +60,11 @@ does not enable sync. Read the [care guide](https://github.com/obsdoghq/obsdog-r
 v0.2.5 excludes returned-only searches from the bounded Living-memory scoring
 input without removing those events from history. Scoring weights and historical
 chunks are unchanged; this is a correctness repair, not a benchmarked quality gain.
+
+v0.2.6 adds bounded recent activity with exact search traces, browser-device
+time display for individual events (daily totals remain UTC), and quiet update
+notices. Agent block edits require a base revision; structural edits still need
+single-writer coordination or a checked care plan.
 
 ```sh
 brew update
