@@ -70,10 +70,10 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
-The v0.2.2 formula passes style, strict audit, an actual 0.2.1-to-0.2.2 upgrade
+The v0.2.3 formula passes style, strict audit, an actual 0.2.2-to-0.2.3 upgrade
 and formula tests. Rejected legacy entrypoints, directory-independent Personal
 selection, agent attribution, the substring policy, document inventory,
-read-only insights and Homebrew updater ownership are checked.
+read-only insights, page coordinates/eligible samples and Homebrew updater ownership are checked.
 
 Public documentation checks run with `python3 scripts/check_public_content.py`
 and `python3 -m unittest discover -s tests`. They supplement review; they are not
