@@ -55,6 +55,10 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
+The v0.2.0 formula passes style, strict audit, an actual 0.1.16-to-0.2.0 upgrade
+and formula tests. Rejected legacy entrypoints, directory-independent Personal
+selection, agent attribution and Homebrew updater ownership are checked.
+
 Public documentation checks run with `python3 scripts/check_public_content.py`
 and `python3 -m unittest discover -s tests`. They supplement review; they are not
 a complete credential or historical-exposure audit.
