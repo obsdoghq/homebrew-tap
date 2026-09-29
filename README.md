@@ -52,9 +52,10 @@ Installing does not inject examples into Personal, open a browser or upload data
 
 ## Update and uninstall
 
-v0.2.16 aligns the offline Graph with the hosted app: settled circular nodes,
-one connected component at a time, exact authored-source links and a complete
-searchable title/ID index. Passive exploration does not record a search or use.
+v0.2.17 shows all loaded documents together in the shared hosted/offline Graph,
+including independent notes. Circular focus emphasizes direct neighbors while
+preserving the complete map and camera. Explicit dashboard deep links work
+without allowing cross-site API access. Passive exploration records no search or use.
 See the [dashboard guide](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/local-dashboard.md).
 After upgrading, restart a running `obsdog dashboard serve` with the same
 Space/port flags and reconnect agent sessions that own an `obsdog mcp` process.
