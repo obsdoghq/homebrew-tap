@@ -52,6 +52,11 @@ Installing does not inject examples into Personal, open a browser or upload data
 
 ## Update and uninstall
 
+v0.2.18 adapts marker/click sizes, title density and zoom/Fit to the map and
+viewport, including tiny, dense, many-component and independent document maps.
+Every loaded document remains in the same view, with the full title/ID index
+available when overview markers are small.
+
 v0.2.17 shows all loaded documents together in the shared hosted/offline Graph,
 including independent notes. Circular focus emphasizes direct neighbors while
 preserving the complete map and camera. Explicit dashboard deep links work
