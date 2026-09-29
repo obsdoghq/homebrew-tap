@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/obsdog_v0.2.10_darwin_arm64.tar.gz"
-  sha256 "63baad17ad2d6c36d5d9dcb244e29dbca3242ae66842360566a210557f5ee7f8"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/obsdog_v0.2.11_darwin_arm64.tar.gz"
+  sha256 "ae396080cb8c175167a2e6788bfe33ce96658cfd24eb44506a77f897f95c8c6c"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -59,8 +59,17 @@ class Obsdog < Formula
     assert result.fetch("ok")
     assert_equal 1, result.fetch("data").fetch("hits").length
     assert_equal "lexical/compact-substring-v1", result.fetch("data").fetch("lexical_policy")
+    assert_equal "obsdog.search/compact-substring-v1", result.fetch("data").fetch("search_policy")
     assert_equal 1, result.fetch("data").fetch("page")
     assert_equal 1, result.fetch("data").fetch("hits").first.fetch("page_rank")
+    miss_command = "#{bin}/obsdog search --query CometWorkerTasks " \
+                   "--actor-type agent --actor package-test --format json"
+    miss = JSON.parse(shell_output(miss_command))
+    assert_equal 0, miss.fetch("data").fetch("returned_count")
+    assert_equal 1, miss.fetch("data").fetch("adjacent_hints").length
+    runs = JSON.parse(shell_output("#{bin}/obsdog trace list --zero-only --format json"))
+    miss_id = miss.fetch("data").fetch("retrieval_run_id")
+    assert runs.fetch("data").fetch("rows").any? { |row| row.fetch("retrieval_run_id") == miss_id }
     documents = JSON.parse(shell_output("#{bin}/obsdog document list --format json"))
     assert_equal 1, documents.fetch("data").length
     insights = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
