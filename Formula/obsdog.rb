@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/obsdog_v0.2.8_darwin_arm64.tar.gz"
-  sha256 "5d5395a5172e7aa6c82b0c6e49945b12e59714cc9a3de1803df00b65801676a9"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/obsdog_v0.2.10_darwin_arm64.tar.gz"
+  sha256 "63baad17ad2d6c36d5d9dcb244e29dbca3242ae66842360566a210557f5ee7f8"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.10/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -68,6 +68,15 @@ class Obsdog < Formula
     assert_equal 0, insights.fetch("data").fetch("current").fetch("used_runs")
     assert_equal 1, insights.fetch("data").fetch("current").fetch("page_eligible")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("first_page_used")
+    system bin/"obsdog", "document", "import", "--file", testpath/"fixture.md", "--fork",
+           "--actor-type", "agent", "--actor", "package-test", "--format", "json"
+    diagnosis = JSON.parse(shell_output("#{bin}/obsdog doctor --format json"))
+    candidates = diagnosis.fetch("data").fetch("duplicate_candidates")
+    assert candidates.any? { |group|
+      group.fetch("documents").length == 2 && group.fetch("documents").all? { |document|
+        document.fetch("created_at") != "" && document.fetch("default_visible_blocks").positive?
+      }
+    }
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
     assert_match "care apply", shell_output("#{bin}/obsdog care --help")
     assert_match "prepare-care", shell_output("#{bin}/obsdog sync --help")
