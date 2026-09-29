@@ -94,12 +94,12 @@ class Obsdog < Formula
     candidates = diagnosis.fetch("data").fetch("duplicate_candidates")
     assert_equal [], diagnosis.fetch("data").fetch("markdown_layout_issues", [])
     current_duplicate = candidates.any? do |group|
-      documents = group.fetch("documents")
-      visible = documents.all? do |document|
+      group_documents = group.fetch("documents")
+      visible = group_documents.all? do |document|
         document.fetch("created_at") != "" && document.fetch("default_visible_blocks").positive?
       end
       group.fetch("visibility_scope") == "current_pair" && group.fetch("current_visible_documents") == 2 &&
-        documents.length == 2 && visible
+        group_documents.length == 2 && visible
     end
     assert current_duplicate
     original = documents.fetch("data").first
