@@ -70,9 +70,11 @@ class Obsdog < Formula
     assert_equal 1, miss.fetch("data").fetch("adjacent_hints").length
     runs = JSON.parse(shell_output("#{bin}/obsdog trace list --zero-only --format json"))
     miss_id = miss.fetch("data").fetch("retrieval_run_id")
-    assert runs.fetch("data").fetch("rows").any? { |row|
-      row.fetch("retrieval_run_id") == miss_id && row.fetch("candidate_count") == 0 && row.fetch("lexical_pool_count") == 0
-    }
+    recorded_zero = runs.fetch("data").fetch("rows").any? do |row|
+      row.fetch("retrieval_run_id") == miss_id &&
+        row.fetch("candidate_count").zero? && row.fetch("lexical_pool_count").zero?
+    end
+    assert recorded_zero
     documents = JSON.parse(shell_output("#{bin}/obsdog document list --format json"))
     assert_equal 1, documents.fetch("data").length
     insights = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
@@ -91,12 +93,15 @@ class Obsdog < Formula
     diagnosis = JSON.parse(shell_output("#{bin}/obsdog doctor --format json"))
     candidates = diagnosis.fetch("data").fetch("duplicate_candidates")
     assert_equal [], diagnosis.fetch("data").fetch("markdown_layout_issues", [])
-    assert candidates.any? { |group|
-      group.fetch("visibility_scope") == "current_pair" && group.fetch("current_visible_documents") == 2 &&
-        group.fetch("documents").length == 2 && group.fetch("documents").all? { |document|
+    current_duplicate = candidates.any? do |group|
+      documents = group.fetch("documents")
+      visible = documents.all? do |document|
         document.fetch("created_at") != "" && document.fetch("default_visible_blocks").positive?
-      }
-    }
+      end
+      group.fetch("visibility_scope") == "current_pair" && group.fetch("current_visible_documents") == 2 &&
+        documents.length == 2 && visible
+    end
+    assert current_duplicate
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
     assert_match "care apply", shell_output("#{bin}/obsdog care --help")
     assert_match "prepare-care", shell_output("#{bin}/obsdog sync --help")
