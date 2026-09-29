@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/obsdog_v0.2.13_darwin_arm64.tar.gz"
-  sha256 "25b034e73d52d596b0c8d25938a3bda68b051cbedfd3f6add76d29d4852eab44"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.14/obsdog_v0.2.14_darwin_arm64.tar.gz"
+  sha256 "25e194582ca0037155f7e56aaaa9de2e6e69a8efc640b5532c1c66e61c9e0742"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.14/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.14/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -102,6 +102,17 @@ class Obsdog < Formula
         documents.length == 2 && visible
     end
     assert current_duplicate
+    original = documents.fetch("data").first
+    doc_id = original.fetch("document_id")
+    (testpath/"section.md").write("## Follow-up\n\nSynthetic append stays in the same document.\n")
+    system bin/"obsdog", "document", "append", "--id", doc_id,
+           "--base-revision", original.fetch("current_revision_id"), "--file", testpath/"section.md",
+           "--reason", "Homebrew synthetic append check", "--actor-type", "agent",
+           "--actor", "package-test", "--format", "json"
+    read_cmd = "#{bin}/obsdog document read --id #{doc_id} --structure --format json"
+    expanded = JSON.parse(shell_output(read_cmd))
+    assert_match "Synthetic append stays in the same document.", expanded.fetch("data").fetch("markdown")
+    assert_equal 4, expanded.fetch("data").fetch("blocks").length
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
     assert_match "care apply", shell_output("#{bin}/obsdog care --help")
     assert_match "prepare-care", shell_output("#{bin}/obsdog sync --help")
