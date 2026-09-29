@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/obsdog_v0.2.12_darwin_arm64.tar.gz"
-  sha256 "f87141b1e4a90983cbce94018b33b9af7b239f1b71eb00f59208d90dbc5a7fe4"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/obsdog_v0.2.13_darwin_arm64.tar.gz"
+  sha256 "25b034e73d52d596b0c8d25938a3bda68b051cbedfd3f6add76d29d4852eab44"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.13/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -66,10 +66,13 @@ class Obsdog < Formula
                    "--actor-type agent --actor package-test --format json"
     miss = JSON.parse(shell_output(miss_command))
     assert_equal 0, miss.fetch("data").fetch("returned_count")
+    assert_equal 0, miss.fetch("data").fetch("candidate_count")
     assert_equal 1, miss.fetch("data").fetch("adjacent_hints").length
     runs = JSON.parse(shell_output("#{bin}/obsdog trace list --zero-only --format json"))
     miss_id = miss.fetch("data").fetch("retrieval_run_id")
-    assert runs.fetch("data").fetch("rows").any? { |row| row.fetch("retrieval_run_id") == miss_id }
+    assert runs.fetch("data").fetch("rows").any? { |row|
+      row.fetch("retrieval_run_id") == miss_id && row.fetch("candidate_count") == 0 && row.fetch("lexical_pool_count") == 0
+    }
     documents = JSON.parse(shell_output("#{bin}/obsdog document list --format json"))
     assert_equal 1, documents.fetch("data").length
     insights = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
@@ -89,7 +92,8 @@ class Obsdog < Formula
     candidates = diagnosis.fetch("data").fetch("duplicate_candidates")
     assert_equal [], diagnosis.fetch("data").fetch("markdown_layout_issues", [])
     assert candidates.any? { |group|
-      group.fetch("documents").length == 2 && group.fetch("documents").all? { |document|
+      group.fetch("visibility_scope") == "current_pair" && group.fetch("current_visible_documents") == 2 &&
+        group.fetch("documents").length == 2 && group.fetch("documents").all? { |document|
         document.fetch("created_at") != "" && document.fetch("default_visible_blocks").positive?
       }
     }
