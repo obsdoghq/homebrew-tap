@@ -29,8 +29,9 @@ class Obsdog < Formula
       Local use needs no account or init. Commands default to your Personal Space.
       Space data is stored in ~/.obsdog and survives brew uninstall.
       Use brew upgrade obsdoghq/tap/obsdog for Homebrew-owned updates.
-      After upgrading, restart any running obsdog dashboard serve process;
-      refreshing its browser page alone keeps the old server running.
+      After upgrading, restart any running obsdog mcp and dashboard serve
+      processes. Existing agent sessions and browser refreshes keep their old
+      processes; reconnect them to use newly installed commands and tools.
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Browse with obsdog document list or obsdog dashboard serve.
