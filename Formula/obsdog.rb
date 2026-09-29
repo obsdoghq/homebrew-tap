@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/obsdog_v0.2.7_darwin_arm64.tar.gz"
-  sha256 "05c459173dec619ef074a2dfe9fc0f91b22d9bb742de8e3567d6676991842682"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/obsdog_v0.2.8_darwin_arm64.tar.gz"
+  sha256 "5d5395a5172e7aa6c82b0c6e49945b12e59714cc9a3de1803df00b65801676a9"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.7/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.8/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -34,6 +34,7 @@ class Obsdog < Formula
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Browse with obsdog document list or obsdog dashboard serve.
+      Import creates a new document; use obsdog doctor to inspect exact duplicate candidates.
     EOS
   end
 
