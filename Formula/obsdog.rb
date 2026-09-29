@@ -75,7 +75,7 @@ class Obsdog < Formula
     insights = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
     assert_equal 2, insights.fetch("data").fetch("current").fetch("searches")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("used_runs")
-    assert_equal 1, insights.fetch("data").fetch("current").fetch("page_eligible")
+    assert_equal 2, insights.fetch("data").fetch("current").fetch("page_eligible")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("first_page_used")
     system bin/"obsdog", "document", "import", "--file", testpath/"fixture.md", "--fork",
            "--actor-type", "agent", "--actor", "package-test", "--format", "json"
