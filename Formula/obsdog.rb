@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/obsdog_v0.2.11_darwin_arm64.tar.gz"
-  sha256 "ae396080cb8c175167a2e6788bfe33ce96658cfd24eb44506a77f897f95c8c6c"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/obsdog_v0.2.12_darwin_arm64.tar.gz"
+  sha256 "f87141b1e4a90983cbce94018b33b9af7b239f1b71eb00f59208d90dbc5a7fe4"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.11/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.12/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -77,10 +77,17 @@ class Obsdog < Formula
     assert_equal 0, insights.fetch("data").fetch("current").fetch("used_runs")
     assert_equal 2, insights.fetch("data").fetch("current").fetch("page_eligible")
     assert_equal 0, insights.fetch("data").fetch("current").fetch("first_page_used")
+    probe = JSON.parse(shell_output("#{bin}/obsdog search --no-observe --query comet --format json"))
+    assert probe.fetch("data").fetch("diagnostic")
+    assert_equal "", probe.fetch("data").fetch("retrieval_run_id")
+    assert_equal 1, probe.fetch("data").fetch("returned_count")
+    after_probe = JSON.parse(shell_output("#{bin}/obsdog insights show --format json"))
+    assert_equal 2, after_probe.fetch("data").fetch("current").fetch("searches")
     system bin/"obsdog", "document", "import", "--file", testpath/"fixture.md", "--fork",
            "--actor-type", "agent", "--actor", "package-test", "--format", "json"
     diagnosis = JSON.parse(shell_output("#{bin}/obsdog doctor --format json"))
     candidates = diagnosis.fetch("data").fetch("duplicate_candidates")
+    assert_equal [], diagnosis.fetch("data").fetch("markdown_layout_issues", [])
     assert candidates.any? { |group|
       group.fetch("documents").length == 2 && group.fetch("documents").all? { |document|
         document.fetch("created_at") != "" && document.fetch("default_visible_blocks").positive?
