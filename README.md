@@ -52,6 +52,14 @@ Installing does not inject examples into Personal, open a browser or upload data
 
 ## Update and uninstall
 
+v0.2.16 aligns the offline Graph with the hosted app: settled circular nodes,
+one connected component at a time, exact authored-source links and a complete
+searchable title/ID index. Passive exploration does not record a search or use.
+See the [dashboard guide](https://github.com/obsdoghq/obsdog-releases/blob/main/guides/local-dashboard.md).
+After upgrading, restart a running `obsdog dashboard serve` with the same
+Space/port flags and reconnect agent sessions that own an `obsdog mcp` process.
+A browser refresh alone cannot replace a running server.
+
 v0.2.4 adds bounded AI care plans, exact outcome/history receipts, atomic
 structural sync and conditional recovery. Connected care needs server v0.1.29+,
 compatible active writers and preparation of the existing connection; installation
