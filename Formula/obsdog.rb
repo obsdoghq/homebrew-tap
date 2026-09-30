@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.18/obsdog_v0.2.18_darwin_arm64.tar.gz"
-  sha256 "5b2029e2ed4240b8ff61f65160ec5e5a1951cf7a3afff7c4a239d6abc2560a1b"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.19/obsdog_v0.2.19_darwin_arm64.tar.gz"
+  sha256 "10cd7df5242febb0d5dc7de5d84ed4ccf4f54aa15a07875a1aef59502c3c20ea"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.18/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.19/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.18/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.19/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -32,6 +32,10 @@ class Obsdog < Formula
       After upgrading, restart any running obsdog mcp and dashboard serve
       processes. Existing agent sessions and browser refreshes keep their old
       processes; reconnect them to use newly installed commands and tools.
+      Use obsdog dashboard status to compare the running viewer with this CLI.
+      Reconnect existing MCP sessions before using a schema-11 library; old
+      stable writers are not a supported downgrade. Passive dashboard reads
+      do not migrate the library or terminate another process.
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Browse with obsdog document list or obsdog dashboard serve.
