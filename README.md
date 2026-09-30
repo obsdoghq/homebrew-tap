@@ -13,6 +13,12 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
+The v0.2.20 formula pins the platform-only stable update; schema 11 and product
+behavior remain unchanged from v0.2.19. Linux x64 uses the
+[standalone release installer](https://github.com/obsdoghq/obsdog-releases#linux-x64-support),
+not this macOS-only formula. Retain the usual process-restart and instruction
+review checks after updating either installation method.
+
 CLI v0.2.0 defaults to the same Personal Space from any directory. `init`,
 `--path` and `--source-path` have been removed without compatibility aliases.
 Use `--space personal` or an exact local Space ID when selecting explicitly;
