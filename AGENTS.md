@@ -1,5 +1,10 @@
 # Distribution metadata
 
+- Track internal work/verification only in Project draft tickets, not duplicate
+  Issues or live TODO.md checklists. Public Issues remain feedback intake. Keep
+  private release/operations plans outside this repository; do not publish their
+  bodies or access details here.
+
 - This public repository contains Homebrew formulae and download documentation only.
 - Never add proprietary product source, secrets, deployment configuration or user data.
 - Pin an immutable public release URL and its verified SHA-256. Never overwrite releases.

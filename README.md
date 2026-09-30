@@ -2,6 +2,11 @@
 
 Official binary distribution metadata for [ObsDog](https://obsdog.ai). Product source remains private and proprietary; this tap does not contain product source.
 
+Track internal work only in Project draft tickets, not duplicate Issues.
+Use [issues](https://github.com/obsdoghq/homebrew-tap/issues) for feedback and follow the
+[feedback privacy guide](https://github.com/obsdoghq/obsdog-releases/blob/main/FEEDBACK.md);
+private operations plans stay separate.
+
 ## Install the CLI
 
 ```sh
