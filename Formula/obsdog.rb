@@ -38,6 +38,8 @@ class Obsdog < Formula
       do not migrate the library or terminate another process.
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
+      Review the ObsDog section in AGENTS.md / CLAUDE.md after upgrading:
+      https://github.com/obsdoghq/skills/blob/main/docs/SETUP.md#updating-cli-and-agent-guidance
       Browse with obsdog document list or obsdog dashboard serve.
       Import creates a new document; use obsdog doctor to inspect exact duplicate candidates.
     EOS

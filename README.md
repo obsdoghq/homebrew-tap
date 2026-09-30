@@ -93,6 +93,8 @@ brew uninstall obsdog
 
 `obsdog update` recognizes Homebrew ownership and directs you to `brew upgrade`; it does not replace a Homebrew-managed binary. Uninstalling the formula does not delete `~/.obsdog` or project bindings. The default local Wiki is `http://127.0.0.1:47777`.
 
+After upgrading, follow the [AI-client update checklist](https://github.com/obsdoghq/skills/blob/main/docs/SETUP.md#updating-cli-and-agent-guidance): update the separate plugin, restart any running dashboard or `wiki serve`, and reconnect host-owned MCP sessions. Review the ObsDog section in your `AGENTS.md` / `CLAUDE.md` against the current guidance; the plugin does not overwrite these files.
+
 Choose either Homebrew or the [standalone installer](https://github.com/obsdoghq/obsdog-releases), not both for the same CLI on your PATH. Use `command -v obsdog` to check the active installation.
 
 If Homebrew asks you to trust third-party code, review this exact formula and approve only this formula; whole-tap trust is unnecessary. Binary terms and third-party notices are installed with the package and available through `obsdog --licenses`.
