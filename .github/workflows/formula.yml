@@ -1,0 +1,51 @@
+name: Verify public Homebrew formula
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Formula/obsdog.rb
+      - .github/workflows/formula.yml
+  pull_request:
+    paths:
+      - Formula/obsdog.rb
+      - .github/workflows/formula.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: formula-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  formula:
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_ANALYTICS: '1'
+      HOMEBREW_NO_INSTALL_CLEANUP: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Load the reviewed formula on an Apple silicon runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$(uname -m)" == arm64 ]]
+          brew tap obsdoghq/tap
+          tap_directory="$(brew --repository obsdoghq/tap)"
+          [[ -d "$tap_directory/Formula" ]]
+          cp "$GITHUB_WORKSPACE/Formula/obsdog.rb" "$tap_directory/Formula/obsdog.rb"
+          cmp "$GITHUB_WORKSPACE/Formula/obsdog.rb" "$tap_directory/Formula/obsdog.rb"
+      - name: Style and strict audit
+        run: |
+          brew style obsdoghq/tap/obsdog
+          brew audit --strict obsdoghq/tap/obsdog
+      - name: Install the public binary and run synthetic acceptance
+        run: |
+          brew install obsdoghq/tap/obsdog
+          brew test obsdoghq/tap/obsdog
