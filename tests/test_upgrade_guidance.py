@@ -1,4 +1,5 @@
 """Keep the terminal upgrade handoff aligned with the public setup guide."""
+import re
 import unittest
 from pathlib import Path
 
@@ -27,6 +28,21 @@ class UpgradeGuidanceTests(unittest.TestCase):
         self.assertIn("CLAUDE.md", readme)
         self.assertIn("does not overwrite these files", readme)
         self.assertIn("host-owned MCP sessions", readme)
+
+    def test_schema_transition_precedes_restart_and_pins_this_release(self):
+        formula = (ROOT / "Formula" / "obsdog.rb").read_text()
+        caveat = formula.split("  def caveats\n", 1)[1].split("    EOS\n", 1)[0]
+        version = re.search(r"releases/download/(v\d+\.\d+\.\d+)/", formula)
+        self.assertIsNotNone(version)
+        guide = (
+            "https://github.com/obsdoghq/obsdog-releases/blob/"
+            + version.group(1)
+            + "/guides/local-schema-migration.md"
+        )
+        self.assertIn(guide, caveat)
+        self.assertIn("Installation does not migrate them or stop writers", caveat)
+        self.assertIn("Pause that library's writers", caveat)
+        self.assertLess(caveat.index("backup-first"), caveat.index("After upgrading"))
 
 
 if __name__ == "__main__":
