@@ -116,6 +116,15 @@ Update the formula only after the exact public release is anonymously downloadab
 
 Formula tests use synthetic local knowledge and an isolated `OBSDOG_HOME`; they do not log in, upload documents, or inspect an existing Space. Release evidence is tracked in the private product repository; public installation guidance belongs here and in [ObsDog downloads](https://github.com/obsdoghq/obsdog-releases).
 
+The **Verify public Homebrew formula** workflow checks the exact checked-out
+formula on a fresh GitHub-hosted Apple silicon runner. It runs style, strict
+audit, installation and the formula's synthetic tests without changing a
+maintainer's installation. The workflow needs read-only repository access and
+does not build, sign or publish product binaries. An unpublished release URL
+must fail; run this gate only once the immutable public assets are available.
+See [GitHub's standard runner labels](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
+and [Homebrew's formula checks](https://docs.brew.sh/Formula-Cookbook#audit-the-formula).
+
 The v0.2.5 formula passed style, strict audit, actual upgrade from v0.2.4 and
 formula tests. Rejected legacy entrypoints, directory-independent Personal
 selection, agent attribution, the substring policy, document inventory,
