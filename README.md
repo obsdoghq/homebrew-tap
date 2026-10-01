@@ -18,8 +18,14 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-The v0.2.20 formula pins the platform-only stable update; schema 11 and product
-behavior remain unchanged from v0.2.19. Linux x64 uses the
+The v0.2.22 formula creates new libraries at schema 12. **Existing schema-11
+libraries need the separate backup-first transition tool**; installing or
+upgrading never migrates them. Read the
+[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.22/guides/local-schema-migration.md)
+before opening an older library. Keep private consistent backups, pause that
+library's writers, then reconnect its MCPs and restart its dashboard after the
+transition. This read-oriented beta still has write/WAL costs, not a general
+write-speed or temporary-file reduction guarantee. Linux x64 uses the
 [standalone release installer](https://github.com/obsdoghq/obsdog-releases#linux-x64-support),
 not this macOS-only formula. Retain the usual process-restart and instruction
 review checks after updating either installation method.
