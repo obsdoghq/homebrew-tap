@@ -48,4 +48,4 @@ jobs:
       - name: Install the public binary and run synthetic acceptance
         run: |
           brew install obsdoghq/tap/obsdog
-          brew test obsdoghq/tap/obsdog
+          brew test obsdoghq/tap/obsdog --verbose
