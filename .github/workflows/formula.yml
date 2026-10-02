@@ -45,7 +45,34 @@ jobs:
         run: |
           brew style obsdoghq/tap/obsdog
           brew audit --strict obsdoghq/tap/obsdog
+      - name: Inspect the runner's anonymous public API budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --silent --show-error --max-time 15 --dump-header - --output /dev/null \
+            https://api.github.com/repos/obsdoghq/obsdog-releases/releases/latest \
+            | awk 'tolower($0) ~ /^(http\/|x-ratelimit-|retry-after:)/'
       - name: Install the public binary and run synthetic acceptance
         run: |
           brew install obsdoghq/tap/obsdog
           brew test obsdoghq/tap/obsdog --verbose
+      - name: Verify the public updater outside the formula sandbox
+        shell: bash
+        env:
+          # Homebrew deliberately clears token variables from formula tests.
+          # CI-only public lookup; never a maintainer credential.
+          OBSDOG_GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          task_profile="$(mktemp -d)"
+          trap 'rm -rf "$task_profile"' EXIT
+          export OBSDOG_HOME="$task_profile" OBSDOG_NO_UPDATE_NOTIFIER=1
+          cli="$(brew --prefix obsdoghq/tap/obsdog)/bin/obsdog"
+          version="$("$cli" version)"
+          before="$(shasum -a 256 "$cli")"
+          "$cli" update --check --format json | jq -e --arg version "$version" '
+            .ok and .data.owner=="homebrew" and
+            .data.current_version==$version and .data.latest_version==$version and
+            .data.instruction=="brew upgrade obsdoghq/tap/obsdog" and
+            .data.update_available==false and .data.updated==false'
+          [[ "$before" == "$(shasum -a 256 "$cli")" ]]

@@ -37,6 +37,39 @@ class FormulaWorkflowTests(unittest.TestCase):
         self.assertIn("search --no-observe", test_body)
         self.assertNotRegex(test_body, r"(?:login|sync push|sync pull|mcp)\s*[,\"]")
 
+    def test_public_api_lookup_uses_only_a_step_scoped_ci_token(self):
+        updater = self.workflow.split(
+            "      - name: Verify the public updater outside the formula sandbox\n", 1
+        )[1]
+        acceptance = self.workflow.split(
+            "      - name: Install the public binary and run synthetic acceptance\n", 1
+        )[1].split("      - name: Verify the public updater", 1)[0]
+        self.assertNotIn("OBSDOG_GITHUB_TOKEN", acceptance)
+        self.assertIn("        env:\n", updater)
+        self.assertIn("OBSDOG_GITHUB_TOKEN: ${{ github.token }}", updater)
+        self.assertEqual(1, self.workflow.count("OBSDOG_GITHUB_TOKEN:"))
+        self.assertIn("contents: read", self.workflow)
+        self.assertNotIn("secrets.", self.workflow)
+        self.assertIn("--max-time 15 --dump-header - --output /dev/null", self.workflow)
+        self.assertIn("x-ratelimit-", self.workflow)
+        self.assertIn('task_profile="$(mktemp -d)"', updater)
+        self.assertIn('export OBSDOG_HOME="$task_profile"', updater)
+        self.assertIn('"$cli" update --check --format json', updater)
+        self.assertIn(".data.owner==\"homebrew\"", updater)
+        self.assertIn('.data.latest_version==$version', updater)
+        self.assertIn('[[ "$before" == "$(shasum -a 256 "$cli")" ]]', updater)
+        self.assertNotIn("continue-on-error", updater)
+        self.assertNotIn("|| true", updater)
+
+    def test_formula_ownership_check_requires_no_release_network(self):
+        formula = (ROOT / "Formula" / "obsdog.rb").read_text()
+        test_body = formula.split("  test do\n", 1)[1]
+        self.assertNotIn("update --check", test_body)
+        self.assertIn('shell_output("#{bin}/obsdog update --format json", 1)', test_body)
+        self.assertIn('refute update.fetch("ok")', test_body)
+        self.assertIn("this installation is owned by Homebrew", test_body)
+        self.assertIn('assert_equal digest, Digest::SHA256.file(bin/"obsdog").hexdigest', test_body)
+
 
 if __name__ == "__main__":
     unittest.main()
