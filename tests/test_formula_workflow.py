@@ -37,6 +37,20 @@ class FormulaWorkflowTests(unittest.TestCase):
         self.assertIn("search --no-observe", test_body)
         self.assertNotRegex(test_body, r"(?:login|sync push|sync pull|mcp)\s*[,\"]")
 
+    def test_public_api_lookup_uses_only_a_step_scoped_ci_token(self):
+        acceptance = self.workflow.split(
+            "      - name: Install the public binary and run synthetic acceptance\n", 1
+        )[1]
+        self.assertIn("        env:\n", acceptance)
+        self.assertIn("OBSDOG_GITHUB_TOKEN: ${{ github.token }}", acceptance)
+        self.assertEqual(1, self.workflow.count("OBSDOG_GITHUB_TOKEN:"))
+        self.assertIn("contents: read", self.workflow)
+        self.assertNotIn("secrets.", self.workflow)
+        self.assertIn("--max-time 15 --dump-header - --output /dev/null", self.workflow)
+        self.assertIn("x-ratelimit-", self.workflow)
+        self.assertNotIn("continue-on-error", acceptance)
+        self.assertNotIn("|| true", acceptance)
+
 
 if __name__ == "__main__":
     unittest.main()

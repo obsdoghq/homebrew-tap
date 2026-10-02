@@ -130,6 +130,10 @@ audit, installation and the formula's synthetic tests without changing a
 maintainer's installation. The workflow needs read-only repository access and
 does not build, sign or publish product binaries. An unpublished release URL
 must fail; run this gate only once the immutable public assets are available.
+The CI-only update lookup uses the workflow's short-lived, read-only GitHub token
+instead of the shared runner's anonymous API budget. No maintainer secret or
+user account is needed. This does not replace separate anonymous installer and
+standalone-update acceptance, and no formula assertion is skipped.
 See [GitHub's standard runner labels](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
 and [Homebrew's formula checks](https://docs.brew.sh/Formula-Cookbook#audit-the-formula).
 

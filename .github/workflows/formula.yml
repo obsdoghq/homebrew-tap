@@ -45,7 +45,17 @@ jobs:
         run: |
           brew style obsdoghq/tap/obsdog
           brew audit --strict obsdoghq/tap/obsdog
+      - name: Inspect the runner's anonymous public API budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --silent --show-error --max-time 15 --dump-header - --output /dev/null \
+            https://api.github.com/repos/obsdoghq/obsdog-releases/releases/latest \
+            | awk 'tolower($0) ~ /^(http\/|x-ratelimit-|retry-after:)/'
       - name: Install the public binary and run synthetic acceptance
+        env:
+          # CI-only public release lookup; never a maintainer credential.
+          OBSDOG_GITHUB_TOKEN: ${{ github.token }}
         run: |
           brew install obsdoghq/tap/obsdog
           brew test obsdoghq/tap/obsdog --verbose
