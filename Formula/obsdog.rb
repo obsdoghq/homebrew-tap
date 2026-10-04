@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.24/obsdog_v0.2.24_darwin_arm64.tar.gz"
-  sha256 "9af612f10aa265d177afdf21ed06b1281f0339734a74d6efe7fab757ab73a58a"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.25/obsdog_v0.2.25_darwin_arm64.tar.gz"
+  sha256 "4177965f6b739e105f5d65965a2052a879839595d70810da6eb08f1225397295"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.24/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.25/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.24/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.25/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -32,7 +32,7 @@ class Obsdog < Formula
       Existing schema-11 libraries need the separate backup-first 11-to-12
       transition tool. Installation does not migrate them or stop writers.
       Pause that library's writers and follow the guide before first use:
-      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.24/guides/local-schema-migration.md
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.25/guides/local-schema-migration.md
       Old writers are not a supported downgrade of schema-12 data.
       After upgrading, restart any running obsdog mcp and dashboard serve
       processes. Existing agent sessions and browser refreshes keep their old
