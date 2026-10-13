@@ -18,12 +18,17 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-The v0.2.23 formula preserves v0.2.22's schema 12 and repairs sync receipts,
-credential coherence and bounded diagnostics. Already-transitioned schema-12
+The v0.2.26 formula preserves v0.2.22's schema 12 and receives compatible remote
+MCP evidence and document-maintenance history. Original producer attribution
+remains distinct from local CLI actions. Pause older writers before receiving
+this profile; its compatibility fence refuses incompatible writers. Installing
+the CLI does not prepare a Space, enable sync or grant remote permissions.
+Remote MCP search, reads and permitted writes need no CLI installation.
+Already-transitioned schema-12
 libraries need no repeat migration. **Existing schema-11
 libraries need the separate backup-first transition tool**; installing or
 upgrading never migrates them. Read the
-[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.23/guides/local-schema-migration.md)
+[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.26/guides/local-schema-migration.md)
 before opening an older library. Keep private consistent backups, pause that
 library's writers, then reconnect its MCPs and restart its dashboard after the
 transition. This read-oriented beta still has write/WAL costs, not a general
