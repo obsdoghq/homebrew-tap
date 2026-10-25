@@ -18,7 +18,7 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-The v0.2.29 formula preserves v0.2.22's schema 12 and receives compatible remote
+The v0.2.30 formula preserves v0.2.22's schema 12 and receives compatible remote
 MCP evidence and document-maintenance history. Original producer attribution
 remains distinct from local CLI actions. Pause older writers before receiving
 this profile; its compatibility fence refuses incompatible writers. Installing
@@ -35,7 +35,7 @@ Already-transitioned schema-12
 libraries need no repeat migration. **Existing schema-11
 libraries need the separate backup-first transition tool**; installing or
 upgrading never migrates them. Read the
-[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.29/guides/local-schema-migration.md)
+[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.30/guides/local-schema-migration.md)
 before opening an older library. Keep private consistent backups, pause that
 library's writers, then reconnect its MCPs and restart its dashboard after the
 transition. This read-oriented beta still has write/WAL costs, not a general
@@ -162,7 +162,7 @@ Public documentation checks run with `python3 scripts/check_public_content.py`
 and `python3 -m unittest discover -s tests`. They supplement review; they are not
 a complete credential or historical-exposure audit.
 
-In v0.2.29, retention-enabled Spaces restore a complete checkpoint and preserve
+In v0.2.30, retention-enabled Spaces restore a complete checkpoint and preserve
 offline work as recovery drafts. Current document/block links keep working;
 expired historical bodies are reported explicitly. See the
-[history and recovery guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.29/guides/history-retention.md).
+[history and recovery guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.30/guides/history-retention.md).
