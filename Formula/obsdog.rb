@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.30/obsdog_v0.2.30_darwin_arm64.tar.gz"
-  sha256 "85f9672c5a287f72d72b7d4be54428f8c8a567130e8ca979abac9c74988dddca"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.31/obsdog_v0.2.31_darwin_arm64.tar.gz"
+  sha256 "641cbc619cff33acd7e235427a26f33b2b7afbf1247dc28ad3b006a3a10836a4"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.30/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.31/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.30/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.31/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -32,7 +32,7 @@ class Obsdog < Formula
       Existing schema-11 libraries need the separate backup-first 11-to-12
       transition tool. Installation does not migrate them or stop writers.
       Pause that library's writers and follow the guide before first use:
-      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.30/guides/local-schema-migration.md
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.31/guides/local-schema-migration.md
       Old writers are not a supported downgrade of schema-12 data.
       After upgrading, restart any running obsdog mcp and dashboard serve
       processes. Existing agent sessions and browser refreshes keep their old
@@ -40,7 +40,7 @@ class Obsdog < Formula
       Use obsdog dashboard status to compare the running viewer with this CLI.
       Retention-enabled Spaces restore a complete checkpoint before later sync.
       Pending offline edits remain recovery drafts; preserve the original profile.
-      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.30/guides/history-retention.md
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.31/guides/history-retention.md
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Review the ObsDog section in AGENTS.md / CLAUDE.md after upgrading:
