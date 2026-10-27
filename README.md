@@ -18,6 +18,12 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
+The v0.2.34 formula adds failed-import recovery drafts, read-only split previews,
+explicit title headings, strict search flag placement and separate version/capability
+diagnostics. See the [release note](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.34.md).
+It includes the storage behavior below. A new title-extraction floor requires
+compatible active consumers; installation does not prepare a connected endpoint.
+
 The v0.2.33 formula supports existing schema12 libraries without migration;
 fresh libraries use13. New search snapshots share immutable membership and block
 state, including run-pinned snapshots, and learned projection reuses per-run
