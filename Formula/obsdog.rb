@@ -1,20 +1,20 @@
 class Obsdog < Formula
   desc "Local-first knowledge search, feedback, and dashboard CLI"
   homepage "https://obsdog.ai"
-  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.35/obsdog_v0.2.35_darwin_arm64.tar.gz"
-  sha256 "9e9d1b183809c23f82279b11f0710c48f98869b875485c673700ab6d6a0492ce"
+  url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.36/obsdog_v0.2.36_darwin_arm64.tar.gz"
+  sha256 "e813189d8e4f9714573e5317f36fbc8ee483a0e1ac7a3a93dadbdd9837976e61"
   license :cannot_represent
 
   depends_on arch: :arm64
   depends_on :macos
 
   resource "binary-license" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.35/BINARY-LICENSE.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.36/BINARY-LICENSE.txt"
     sha256 "103b5830a3f09e07dd74efbea8ad6352b4f14a1b7f67c1807f92cd6bd62ede9b"
   end
 
   resource "third-party-notices" do
-    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.35/THIRD_PARTY_NOTICES.txt"
+    url "https://github.com/obsdoghq/obsdog-releases/releases/download/v0.2.36/THIRD_PARTY_NOTICES.txt"
     sha256 "d582b979400481f83bb06be5409dc6d66a07f19549aa03888d725f779bdcba8a"
   end
 
@@ -34,7 +34,7 @@ class Obsdog < Formula
       checksummed backup-first tool. Schema-11 needs its separate 11-to-12 tool.
       Installation does not migrate them or stop writers.
       Pause that library's writers and follow the exact guide before changing format:
-      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.35/guides/local-schema-migration.md
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.36/guides/local-schema-migration.md
       Older writers refuse schema-13; do not use them as a downgrade.
       After upgrading, restart any running obsdog mcp and dashboard serve
       processes. Existing agent sessions and browser refreshes keep their old
@@ -42,13 +42,23 @@ class Obsdog < Formula
       Use obsdog dashboard status to compare the running viewer with this CLI.
       Retention-enabled Spaces restore a complete checkpoint before later sync.
       Pending offline edits remain recovery drafts; preserve the original profile.
-      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.35/guides/history-retention.md
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.36/guides/history-retention.md
       Update every active client before its first batch, titled extraction or structural Care,
       including local-only libraries. Receipts using newer formats can raise that
       Space's compatibility floor, including deferred/failed outcomes; older clients
       are refused afterward.
       Installation alone does not enable connected server capabilities.
       Use obsdog space write-readiness separately from ordinary read-only status.
+      Search/open separate actual content from observation persistence; diagnostic
+      next_read targets do not establish use or evaluation. Local MCP failures
+      expose structured errors without a normal default result.
+      Use document repair-parent-context with an exact head and --dry-run for
+      parent-only drift. Ordinary move preserves parents; explicit Care reparent
+      recalculates them. Document update and block move have read-only previews.
+      Retire temporary documents without a sink; exact history remains available.
+      Preview space compact, preserve an accepted backup, then explicitly --apply.
+      Compaction cannot remove live protected history or enable a retention policy.
+      https://github.com/obsdoghq/obsdog-releases/blob/v0.2.36/guides/local-maintenance.md
       This package is the CLI, not the macOS desktop app.
       The AI plugin is separate. Verify obsdog version before using its skills.
       Use obsdog doctor --check-updates for an explicit latest-release lookup;
@@ -136,6 +146,19 @@ class Obsdog < Formula
     expanded = JSON.parse(shell_output(read_cmd))
     assert_match "Synthetic append stays in the same document.", expanded.fetch("data").fetch("markdown")
     assert_equal 4, expanded.fetch("data").fetch("blocks").length
+
+    maintenance = JSON.parse(shell_output("#{bin}/obsdog space compact --format json"))
+    assert maintenance.fetch("ok")
+    refute maintenance.fetch("data").fetch("applied")
+    assert_match "repair-parent-context", shell_output("#{bin}/obsdog document --help")
+    assert_match "--dry-run", shell_output("#{bin}/obsdog block move --help")
+    head = expanded.fetch("data").fetch("document").fetch("current_revision_id")
+    repair = JSON.parse(shell_output("#{bin}/obsdog document repair-parent-context " \
+                                    "--id #{doc_id} --base-revision #{head} " \
+                                    "--reason 'Inspect package parent context' --actor-type agent --actor package-test " \
+                                    "--dry-run --format json"))
+    assert repair.fetch("ok")
+    assert_equal "no_op", repair.fetch("data").fetch("status")
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
     assert_match "care apply", shell_output("#{bin}/obsdog care --help")
     assert_match "prepare-care", shell_output("#{bin}/obsdog sync --help")
