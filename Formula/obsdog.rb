@@ -152,11 +152,12 @@ class Obsdog < Formula
     refute maintenance.fetch("data").fetch("applied")
     assert_match "repair-parent-context", shell_output("#{bin}/obsdog document --help")
     assert_match "--dry-run", shell_output("#{bin}/obsdog block move --help")
-    head = expanded.fetch("data").fetch("document").fetch("current_revision_id")
-    repair = JSON.parse(shell_output("#{bin}/obsdog document repair-parent-context " \
-                                    "--id #{doc_id} --base-revision #{head} " \
-                                    "--reason 'Inspect package parent context' --actor-type agent --actor package-test " \
-                                    "--dry-run --format json"))
+    doc_revision = expanded.fetch("data").fetch("document").fetch("current_revision_id")
+    repair_command = "#{bin}/obsdog document repair-parent-context " \
+                     "--id #{doc_id} --base-revision #{doc_revision} " \
+                     "--reason 'Inspect package parent context' " \
+                     "--actor-type agent --actor package-test --dry-run --format json"
+    repair = JSON.parse(shell_output(repair_command))
     assert repair.fetch("ok")
     assert_equal "no_op", repair.fetch("data").fetch("status")
     assert_match "47777", shell_output("#{bin}/obsdog dashboard --help")
