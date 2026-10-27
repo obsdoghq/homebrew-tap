@@ -18,12 +18,19 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-The v0.2.32 formula preserves schema 12 and receives compatible remote
-MCP evidence and document-maintenance history. Original producer attribution
-remains distinct from local CLI actions. Pause older writers before receiving
-this profile; its compatibility fence refuses incompatible writers. Installing
-the CLI does not prepare a Space, enable sync or grant remote permissions.
-Remote MCP search, reads and permitted writes need no CLI installation.
+The v0.2.33 formula supports existing schema12 libraries without migration;
+fresh libraries use13. New search snapshots share immutable membership and block
+state, including run-pinned snapshots, and learned projection reuses per-run
+sample derivation. Exact historical IDs/revisions/labels and dynamic scoring are
+preserved. Sharing does not shrink existing files or guarantee faster commands.
+The [backup-first12→13 transition](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.33/guides/local-schema-migration.md)
+is optional and separately checksummed; older writers refuse13.
+
+Compatible remote MCP evidence and document-maintenance history remain supported.
+Original producer attribution stays distinct from local CLI actions. Pause older
+writers before receiving a profile with a compatibility floor. Installing does
+not prepare a Space, enable sync or grant remote permissions. Remote MCP search,
+reads and permitted writes need no CLI installation.
 
 v0.2.32 reuses unchanged current search text while retaining exact immutable
 current chunks and historical results. Membership and source checks still scale
@@ -33,7 +40,7 @@ source-ordered complete-subtree batches in connected Spaces advertising
 including local-only libraries. Recorded deferred/failed batch receipts also
 raise that Space's compatibility floor; older consumers and writers are refused.
 A read-only check, unsupported refusal or no-op records no receipt or new floor.
-See the [release notes](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.32/releases/v0.2.32.md)
+See the [release notes](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.33/releases/v0.2.32.md)
 before adopting batches. Installing alone does not enable the server capability.
 
 v0.2.27 also fixes existing-history transfers from current libraries and exact
@@ -47,7 +54,7 @@ Already-transitioned schema-12
 libraries need no repeat migration. **Existing schema-11
 libraries need the separate backup-first transition tool**; installing or
 upgrading never migrates them. Read the
-[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.32/guides/local-schema-migration.md)
+[exact migration guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.33/guides/local-schema-migration.md)
 before opening an older library. Keep private consistent backups, pause that
 library's writers, then reconnect its MCPs and restart its dashboard after the
 transition. This read-oriented beta still has write/WAL costs, not a general
@@ -177,4 +184,4 @@ a complete credential or historical-exposure audit.
 In v0.2.30, retention-enabled Spaces restore a complete checkpoint and preserve
 offline work as recovery drafts. Current document/block links keep working;
 expired historical bodies are reported explicitly. See the
-[history and recovery guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.32/guides/history-retention.md).
+[history and recovery guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.33/guides/history-retention.md).
