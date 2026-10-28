@@ -18,13 +18,20 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-The v0.2.37 formula supports the explicitly enabled bounded activity policy:
+v0.2.38 separates accepted reads, edits, search observations and Care receipts.
+Inspect original private correction drafts and retry only failed targets.
+Commands have a shared default 60s cancellation deadline; current inventory
+excludes settled redirects. Owned dashboard restart checks private control;
+older viewers require a manual foreground stop. See the
+[accepted-work guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.38/guides/accepted-work.md).
+
+The v0.2.38 formula supports the explicitly enabled bounded activity policy:
 current knowledge stays available, older document versions must satisfy both
 seven days and the latest ten including current, and compact daily aggregates
 remain after raw activity details expire. Complete recovery preserves original
 identities and unresolved local work. Installing does not enable a server policy.
-See the [release note](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.37.md)
-and [history guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.37/guides/history-retention.md).
+See the [release note](https://github.com/obsdoghq/obsdog-releases/blob/main/releases/v0.2.38.md)
+and [history guide](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.38/guides/history-retention.md).
 Native macOS execution and formula installation checks were explicitly waived
 for this release; the archive and formula do not establish native qualification.
 
@@ -163,7 +170,7 @@ If Homebrew asks you to trust third-party code, review this exact formula and ap
 
 Update the formula only after the exact public release is anonymously downloadable and its checksums and standalone upgrade have passed. Never rewrite a published tag or checksum. Run `brew style`, `brew audit --strict`, `brew install` and `brew test` against the candidate formula before advertising it.
 
-For v0.2.37, the explicit native-execution exception skips that Mac sequence and
+For v0.2.37 and v0.2.38, the explicit native-execution exception skips that Mac sequence and
 the automatic formula job for this exact release. Public-content and checksum
 checks remain required. Later releases retain the ordinary native gate.
 
