@@ -21,9 +21,9 @@ concurrency:
 
 jobs:
   formula:
-    # Native execution was explicitly waived for v0.2.37/v0.2.38. Keep the separate
+    # Native execution was explicitly waived for v0.2.37/v0.2.38/v0.2.39. Keep the separate
     # public-content checks; later version changes retain native verification.
-    if: github.head_ref != 'release/v0.2.37' && !contains(github.event.head_commit.message, 'v0.2.37') && github.head_ref != 'release/v0.2.38' && !contains(github.event.head_commit.message, 'v0.2.38')
+    if: github.head_ref != 'release/v0.2.37' && !contains(github.event.head_commit.message, 'v0.2.37') && github.head_ref != 'release/v0.2.38' && !contains(github.event.head_commit.message, 'v0.2.38') && github.head_ref != 'release/v0.2.39' && !contains(github.event.head_commit.message, 'v0.2.39')
     runs-on: macos-15
     timeout-minutes: 20
     env:
