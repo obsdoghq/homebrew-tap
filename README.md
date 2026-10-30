@@ -18,6 +18,13 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
+v0.2.40 aligns expanded search activity with its opened/used counts. Other
+recorded declarations remain visible as uncounted, and missing eligibility stays
+unknown. Restart the dashboard after upgrading; browser refresh alone keeps the
+old process. See the [release note](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.40/releases/v0.2.40.md).
+Additional native macOS execution and formula installation checks remain waived
+for this patch; the archive and formula do not establish native qualification.
+
 v0.2.38 separates accepted reads, edits, search observations and Care receipts.
 Inspect original private correction drafts and retry only failed targets.
 Commands have a shared default 60s cancellation deadline; current inventory
