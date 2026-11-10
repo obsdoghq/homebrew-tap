@@ -18,10 +18,11 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
-v0.2.42 repairs complete-history downloads for larger retained histories and
-reports expired server checkpoints accurately. Keep local changes and retry
-after server recovery; signing in again does not rebuild history. See the
-[release note](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.42/releases/v0.2.42.md).
+v0.2.43 fixes a first history download that failed with
+`UNIQUE constraint failed: blocks.document_id, blocks.ordinal`. Upgrade and retry
+the same pull while keeping your existing Space and connection; no database reset
+or re-pairing is required. It includes the earlier large-history recovery fixes.
+See the [release note](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.43/releases/v0.2.43.md).
 
 v0.2.40 aligns expanded search activity with its opened/used counts. Other
 recorded declarations remain visible as uncounted, and missing eligibility stays
