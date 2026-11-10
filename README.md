@@ -18,6 +18,11 @@ obsdog dashboard serve
 
 Currently available for **Apple silicon macOS** only. No ObsDog or GitHub account is required for local use. Homebrew verifies the SHA-256 of the immutable public release asset.
 
+v0.2.41 repairs complete-history downloads for larger retained histories and
+reports expired server checkpoints accurately. Keep local changes and retry
+after server recovery; signing in again does not rebuild history. See the
+[release note](https://github.com/obsdoghq/obsdog-releases/blob/v0.2.41/releases/v0.2.41.md).
+
 v0.2.40 aligns expanded search activity with its opened/used counts. Other
 recorded declarations remain visible as uncounted, and missing eligibility stays
 unknown. Restart the dashboard after upgrading; browser refresh alone keeps the
